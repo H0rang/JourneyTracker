@@ -27,10 +27,6 @@ public class TrackerView extends View{
         text = ta.getString(R.styleable.TrackerView_Text);
     }
 
-    public void init(){
-
-    }
-
     @Override
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);

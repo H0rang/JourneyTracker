@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Journey Tracker</string>
     <string name="action_settings">Settings</string>
+    <string name="time">Overall Time : </string>
+    <string name="avspeed">Average Speed : </string>
+    <string name="curspeed">Current Speed : </string>
+    <string name="start">Start Tracking</string>
+    <string name="stop">Stop Tracking</string>
 </resources>
