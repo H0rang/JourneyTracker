@@ -10,27 +10,54 @@
     <com.example.horang.journeytracker.TrackerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/custom"
         custom:Text="Text"
-        custom:isOn="false"/>
+        custom:isOn="false"
+        android:layout_alignParentTop="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_above="@+id/text" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="text 1"/>
+        android:id="@+id/text"
+        android:text="text 1"
+        android:layout_above="@+id/text2"
+        android:layout_margin="2dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="text 2"/>
+        android:id="@+id/text2"
+        android:text="text 2"
+        android:layout_above="@+id/text3"
+        android:layout_margin="2dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="text 3"/>
+        android:id="@+id/text3"
+        android:text="text 3"
+        android:layout_above="@+id/text4"
+        android:layout_margin="2dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text4"
+        android:text="text 4"
+        android:layout_margin="2dp"
+        android:layout_above="@+id/button" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tracking Button"/>
+        android:text="Tracking Button"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp" />
 
 </RelativeLayout>
