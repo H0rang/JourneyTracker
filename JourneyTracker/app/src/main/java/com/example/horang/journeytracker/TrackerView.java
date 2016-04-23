@@ -40,7 +40,14 @@ public class TrackerView extends View{
     protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld){
         super.onSizeChanged(xNew, yNew, xOld, yOld);
 
-        viewWidth = xNew;
-        viewHeight = yNew;
+        if(xNew < yNew){
+            viewWidth = xNew;
+            viewHeight = xNew;
+        }
+        else
+        {
+            viewWidth = yNew;
+            viewHeight = yNew;
+        }
     }
 }
