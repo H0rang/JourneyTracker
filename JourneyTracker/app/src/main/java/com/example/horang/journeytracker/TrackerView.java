@@ -12,19 +12,12 @@ import android.view.View;
  * Created by horang on 20/04/16.
  */
 public class TrackerView extends View{
-    private boolean isactive;
-    private String text;
     private int viewHeight;
     private int viewWidth;
 
     public TrackerView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray ta = context.getTheme().obtainStyledAttributes(
-                attrs, R.styleable.TrackerView, 0, 0);
-
-        isactive = ta.getBoolean(R.styleable.TrackerView_isOn, false);
-        text = ta.getString(R.styleable.TrackerView_Text);
     }
 
     @Override

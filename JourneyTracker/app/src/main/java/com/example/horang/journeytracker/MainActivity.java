@@ -1,21 +1,69 @@
 package com.example.horang.journeytracker;
 
+import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     Button button;
+    CircularQueue Q;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Q = new CircularQueue(30);
+        LocationManager manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        LocationListener listener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                Q.addLocation(location);
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        try{
+            manager.requestLocationUpdates(manager.GPS_PROVIDER,1000,0,listener);
+        }catch (SecurityException e){
+            Log.e("GPS",e.getMessage());
+        }
+
         button = (Button) findViewById(R.id.button);
         button.setText(R.string.start);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(button.getText() == getString(R.string.start)){
+                    button.setText(R.string.stop);
+                }
+                else{
+                    button.setText(R.string.start);
+                }
+            }
+        });
     }
 
     @Override
