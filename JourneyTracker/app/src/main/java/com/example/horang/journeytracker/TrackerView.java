@@ -40,8 +40,8 @@ public class TrackerView extends View{
             CircularQueue queue = MainActivity.Q;
             Location[] loclist = queue.getQueue();
             for(int i = 0; i < queue.getSize() - 1; i++){
-                int width1 = (viewWidth/queue.getSize() + 1)*i;
-                int width2 = (viewWidth/queue.getSize() + 1)*(i + 1);
+                int width1 = (viewWidth/queue.getSize() + 2)*i;
+                int width2 = (viewWidth/queue.getSize() + 2)*(i + 1);
                 float height1 = height * (60 - loclist[(queue.getHead() + i) % 30].getSpeed() * 3.6f);
                 float height2 = height * (60 - loclist[(queue.getHead() + i + 1) % 30].getSpeed() * 3.6f);
                 canvas.drawLine(width1, height1, width2, height2, p);
