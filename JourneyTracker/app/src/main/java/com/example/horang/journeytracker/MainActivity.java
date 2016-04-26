@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     TextView ovTime, avSpeed, curSpeed, gpsActive;
     CircularQueue Q;
     Boolean active;
+    LocationManager manager;
+    LocationListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,38 +27,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Q = new CircularQueue(30);
-        LocationManager manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        LocationListener listener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                Q.addLocation(location);
-                if(active){
-                    curSpeed.setText(getString(R.string.curspeed) + " " + Q.getSpeed());
-                    avSpeed.setText(getString(R.string.avspeed) + " " + Q.getAverageSpeed());
-                }
-            }
+        manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
 
-            }
 
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-
-        try{
-            manager.requestLocationUpdates(manager.GPS_PROVIDER,1000,0,listener);
-        }catch (SecurityException e){
-            Log.e("GPS",e.getMessage());
-        }
 
         ovTime = (TextView) findViewById(R.id.text4);
         avSpeed = (TextView) findViewById(R.id.text3);
@@ -77,6 +51,39 @@ public class MainActivity extends AppCompatActivity {
                 if(button.getText() == getString(R.string.start)){
                     button.setText(R.string.stop);
                     active = true;
+
+                    listener = new LocationListener() {
+                        public void onLocationChanged(Location location) {
+                            if(active){
+                                Q.addLocation(location);
+                                curSpeed.setText(getString(R.string.curspeed) + " " + Float.toString(Q.getSpeed()) +
+                                        " km/h");
+                                avSpeed.setText(getString(R.string.avspeed) + " " + Float.toString(Q.getAverageSpeed()) +
+                                        " km/h");
+                            }
+                        }
+
+                        @Override
+                        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                        }
+
+                        @Override
+                        public void onProviderEnabled(String provider) {
+
+                        }
+
+                        @Override
+                        public void onProviderDisabled(String provider) {
+
+                        }
+                    };
+
+                    try{
+                        manager.requestLocationUpdates(manager.GPS_PROVIDER,1000,0,listener);
+                    }catch (SecurityException e){
+                        Log.e("GPS",e.getMessage());
+                    }
                 }
                 else{
                     active = false;

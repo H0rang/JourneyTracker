@@ -31,14 +31,20 @@ public class CircularQueue{
     }
 
     public void addLocation(Location loc){
-        if(size < queue.length){
+        if(size == 0){
+            queue[0] = loc;
             size++;
         }
         else{
-            head = (head + 1) % queue.length;
+            if(size < queue.length){
+                size++;
+            }
+            else{
+                head = (head + 1) % queue.length;
+            }
+            tail = (tail + 1) % queue.length;
+            queue[tail] = loc;
         }
-        tail = (tail + 1) % queue.length;
-        queue[tail] = loc;
     }
 
     public void deleteQueue(){
@@ -55,7 +61,7 @@ public class CircularQueue{
     public float getAverageSpeed(){
         float speed = 0;
         for(int i = 0; i < size; i++)
-            speed += queue[i].getSpeed();
+            speed += queue[(head + i) % 30].getSpeed() * 3.6f;
         speed = speed / (float)size;
         return speed;
     }
