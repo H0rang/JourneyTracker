@@ -26,6 +26,15 @@ public class TrackerView extends View{
         Paint p = new Paint(0);
 
         init(p, canvas);
+
+        if(MainActivity.active){
+            p.setColor(Color.RED);
+            float f = MainActivity.Q.getAverageSpeed();
+            int n = 60 - (int)f;
+            canvas.drawLine(0, (viewHeight/60)*n, viewWidth, (viewHeight/60)*n, p);
+        }
+
+        invalidate();
     }
 
     public void init(Paint p, Canvas canvas){

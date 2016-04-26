@@ -14,10 +14,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    public static Boolean active;
     Button button;
     TextView ovTime, avSpeed, curSpeed, gpsActive;
-    CircularQueue Q;
-    Boolean active;
+    public static CircularQueue Q;
     LocationManager manager;
     LocationListener listener;
 
@@ -28,9 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
         Q = new CircularQueue(30);
         manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-
-
 
         ovTime = (TextView) findViewById(R.id.text4);
         avSpeed = (TextView) findViewById(R.id.text3);
@@ -54,13 +51,11 @@ public class MainActivity extends AppCompatActivity {
 
                     listener = new LocationListener() {
                         public void onLocationChanged(Location location) {
-                            if(active){
-                                Q.addLocation(location);
-                                curSpeed.setText(getString(R.string.curspeed) + " " + Float.toString(Q.getSpeed()) +
-                                        " km/h");
-                                avSpeed.setText(getString(R.string.avspeed) + " " + Float.toString(Q.getAverageSpeed()) +
-                                        " km/h");
-                            }
+                            Q.addLocation(location);
+                            curSpeed.setText(getString(R.string.curspeed) + " " + Float.toString(Q.getSpeed()) +
+                                    " km/h");
+                            avSpeed.setText(getString(R.string.avspeed) + " " + Float.toString(Q.getAverageSpeed()) +
+                                    " km/h");
                         }
 
                         @Override
