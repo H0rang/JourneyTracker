@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.location.Location;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -29,9 +30,22 @@ public class TrackerView extends View{
 
         if(MainActivity.active){
             p.setColor(Color.RED);
-            float f = MainActivity.Q.getAverageSpeed();
-            int n = 60 - (int)f;
-            canvas.drawLine(0, (viewHeight/60)*n, viewWidth, (viewHeight/60)*n, p);
+            int n = 60 - (int)MainActivity.Q.getAverageSpeed();
+            if(n < 0)
+                n = 0;
+            int height = viewHeight / 60;
+            canvas.drawLine(0, height * n, viewWidth, height * n, p);
+
+            p.setColor(Color.GREEN);
+            CircularQueue queue = MainActivity.Q;
+            Location[] loclist = queue.getQueue();
+            for(int i = 0; i < queue.getSize() - 1; i++){
+                int width1 = (viewWidth/queue.getSize() + 1)*i;
+                int width2 = (viewWidth/queue.getSize() + 1)*(i + 1);
+                float height1 = height * (60 - loclist[(queue.getHead() + i) % 30].getSpeed() * 3.6f);
+                float height2 = height * (60 - loclist[(queue.getHead() + i + 1) % 30].getSpeed() * 3.6f);
+                canvas.drawLine(width1, height1, width2, height2, p);
+            }
         }
 
         invalidate();

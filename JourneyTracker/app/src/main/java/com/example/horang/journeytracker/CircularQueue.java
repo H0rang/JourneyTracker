@@ -22,6 +22,10 @@ public class CircularQueue{
         return queue;
     }
 
+    public int getSize(){
+        return size;
+    }
+
     public int getHead() {
         return head;
     }
