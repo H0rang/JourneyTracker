@@ -11,10 +11,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     Button button;
+    TextView ovTime, avSpeed, curSpeed, gpsActive;
     CircularQueue Q;
+    Boolean active;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLocationChanged(Location location) {
                 Q.addLocation(location);
+                if(active){
+                    curSpeed.setText(getString(R.string.curspeed) + " " + Q.getSpeed());
+                    avSpeed.setText(getString(R.string.avspeed) + " " + Q.getAverageSpeed());
+                }
             }
 
             @Override
@@ -51,16 +58,32 @@ public class MainActivity extends AppCompatActivity {
             Log.e("GPS",e.getMessage());
         }
 
+        ovTime = (TextView) findViewById(R.id.text4);
+        avSpeed = (TextView) findViewById(R.id.text3);
+        curSpeed = (TextView) findViewById(R.id.text2);
+        gpsActive = (TextView) findViewById(R.id.text);
+
+        ovTime.setText(getString(R.string.time) + " 0s");
+        avSpeed.setText(getString(R.string.avspeed) + " N/A");
+        curSpeed.setText(getString(R.string.curspeed) + " N/A");
+
         button = (Button) findViewById(R.id.button);
         button.setText(R.string.start);
+        active = false;
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(button.getText() == getString(R.string.start)){
                     button.setText(R.string.stop);
+                    active = true;
                 }
                 else{
+                    active = false;
                     button.setText(R.string.start);
+                    ovTime.setText(getString(R.string.time) + " 0s");
+                    avSpeed.setText(getString(R.string.avspeed) + " N/A");
+                    curSpeed.setText(getString(R.string.curspeed) + " N/A");
                 }
             }
         });

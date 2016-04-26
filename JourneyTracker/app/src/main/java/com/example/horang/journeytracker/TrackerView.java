@@ -24,6 +24,11 @@ public class TrackerView extends View{
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);
         Paint p = new Paint(0);
+
+        init(p, canvas);
+    }
+
+    public void init(Paint p, Canvas canvas){
         p.setColor(Color.BLACK);
 
         canvas.drawRect(0, 0, viewWidth, viewHeight, p);
